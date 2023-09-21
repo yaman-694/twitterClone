@@ -1,0 +1,10 @@
+extends layouts/home-layout.pug
+block content
+    +createPostForm(user)
+    .postsContainer
+    
+    +createPostModals(user)
+    
+
+block scripts
+    script(src="/js/home.js")

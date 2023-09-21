@@ -1,0 +1,49 @@
+mixin createPostForm(user)
+    .postFormContainer
+        .userImageContainer
+            img(src=user.profilePic, alt="user profile pic")
+        .textAreaContainer
+            textarea#postTextArea(placeHolder="What's on your mind?", name="postData", maxlength="1000")
+            .buttonsContainer
+                button#submitPostButton(disabled="") Post
+
+mixin createReplyModal(user)
+    #replyModal.modal.fade(tabindex='-1' aria-labelledby='replyModalLabel' aria-hidden='true')
+        .modal-dialog
+            .modal-content
+                .modal-header
+                    h5#replyModalLabel.modal-title Reply
+                    button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+                .modal-body
+                    #originalPostContainer
+                    .postFormContainer
+                        .userImageContainer
+                            img(src=user.profilePic, alt="user profile pic")
+                        .textAreaContainer
+                            textarea#replyTextArea(placeHolder="What's on your mind?", name="postData", maxlength="1000")
+                .modal-footer
+                    button.btn.btn-secondary(type='button' data-bs-dismiss='modal') Close
+                    button#submitReplyButton.btn.btn-primary(type='button' ,disabled="") Reply
+
+
+mixin createDeletePostModal()
+    #deletePostModal.modal.fade(tabindex='-1' aria-labelledby='deletePostModalLabel' aria-hidden='true')
+        .modal-dialog
+            .modal-content
+                .modal-header
+                    h5#deletePostModalLabel.modal-title Delete the Post?
+                    button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+                .modal-body
+                    p You won't be able to Delete this post!
+                .modal-footer
+                    button.btn.btn-secondary(type='button' data-bs-dismiss='modal') Close
+                    button#submitDeletePostButton.btn.btn-primary(type='button') Delete
+
+mixin createPostModals(user)
+    +createReplyModal(user)
+    +createDeletePostModal()
+
+mixin createFollowButton(user, isFollowing)
+    - text = isFollowing ? "Following" : "Follow"
+    - buttonClass = isFollowing ? "followButton following" : "followButton"
+    button(class=buttonClass ,type='button') #{text}
