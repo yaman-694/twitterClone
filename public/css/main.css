@@ -3,7 +3,7 @@
     --blueLight: rgb(155, 209, 249);
     --buttonHoverbg: #d4edff;
     --lightGrey: rgb(230, 236, 240);
-    --blueBackground: rgba(31, 162, 241, 0.8);
+    --blueBackground: rgb(180 212 231 / 51%);
     --spacing: 10px;
     --greyText: rgb(101, 119, 134);
     --greyButtonText: rgba(0, 0, 0, 0.34);
@@ -21,6 +21,9 @@ nav {
     flex-direction: column;
     align-items: flex-end;
     height: 100%;
+}
+a {
+    text-decoration: none;
 }
 
 h1 {
@@ -62,6 +65,8 @@ nav a:hover {
 nav a.blue {
     color: var(--blue);
 }
+
+
 
 .mainSectionContainer {
     padding: 0;
@@ -317,11 +322,58 @@ button span {
 
 .profileButton:hover,
 .followButton:hover {
-    background-color: var(--blueBackground);
+    background-color: #1fa2f1;
     color: #fff;
 }
 
 .followButton.following {
     background-color: var(--blue);
     color: #fff;
+}
+
+.profileHeaderContainer .userDetailsContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 0 var(--spacing)
+}
+
+.followersContainer .value {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.followersContainer span:not(.value){
+    color: var(--greyText)
+}
+
+.followersContainer a{
+    margin-right: 15px;
+}
+.followersContainer a:hover{
+    border-bottom: 1px solid #000;
+}
+
+.tabsContainer {
+    display: flex;
+    border-bottom: 1px solid var(--lightGrey);
+    height:52px;
+}
+
+.tab {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--greyText);
+    font-weight: bold;
+}
+
+.tab.active {
+    border-bottom: 2px solid;
+    color: var(--blue);   
+}
+
+.tab:hover{
+    color: var(--blue);
+    background-color: var(--blueBackground);
 }

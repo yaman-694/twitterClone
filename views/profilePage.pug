@@ -3,6 +3,8 @@ block content
     if !profileUser || !user
         span.errorMessage User not found
     else
+        script.
+            const profileUserId = `#{profileUser._id}`
         .profileHeaderContainer
             .coverPhotoContainer
                 .userImageContainer
@@ -12,6 +14,21 @@ block content
                     a.profileButton(href=`/messages/${profileUser._id}`)
                         i.fas.fa-envelope
                     +createFollowButton(profileUser, false)
+            .userDetailsContainer
+                span.displayName #{profileUser.firstName} #{profileUser.lastName}
+                span.username @#{profileUser.username}
+                span.description #{profileUser.description}
+
+                .followersContainer
+                    a(href=`/profile/${profileUser.username}/following`)
+                        span.value #{0}
+                        span Following
+                    a(href=`/profile/${profileUser.username}/following`)
+                        span.value #{0}
+                        span Followers
+        .tabsContainer
+            +createTab("Posts", `/profile/${profileUser.username}`, true)
+            +createTab("Replies", `/profile/${profileUser.username}/replies`, false )
         .postsContainer
     
     +createPostModals(user)

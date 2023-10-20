@@ -23,14 +23,23 @@ const postHandler = async (req: RequestWithBody, res: Response) => {
 }
 
 const getpostHandler = async (req: RequestWithBody, res: Response) => {
-    let posts = await PostModel.find({}).populate("postedBy").populate("retweetData").populate("replyTo").sort({ createdAt: -1 });
+    const {postedBy, isReply} = req.query;
+    let query = {} as any;
+    if(postedBy !== undefined) {
+        query.postedBy = postedBy;
+        query.replyTo = { $exists: isReply };
+        delete query.isReply;
+    }
+    console.log("query", query, isReply);
+    let posts = await PostModel.find(query).populate("postedBy").populate("retweetData").populate("replyTo").sort({ createdAt: -1 });
     posts = await PostModel.populate(posts, { path: "replyTo.postedBy" });
     posts = await PostModel.populate(posts, { path: "retweetData.postedBy" });
+    console.log(posts);
     res.status(200).send(posts);
 }
 const getpostByIdHandler = async (req: RequestWithBody, res: Response) => {
     const postId = req.params.id;
-    if(postId === undefined) { console.log(postId);res.status(400).send("Post id is undefined"); return;}
+    if(postId === undefined) { res.status(400).send("Post id is undefined"); return;}
     let postData = await PostModel.findById(postId)
     .populate("postedBy")
     .populate("retweetData")
